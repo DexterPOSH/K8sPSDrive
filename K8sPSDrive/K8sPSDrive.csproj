@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="KubernetesClient" Version="1.6.12" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="6.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.PowerShell.SHiPS">
+      <HintPath>lib\Microsoft.PowerShell.SHiPS.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
