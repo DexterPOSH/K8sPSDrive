@@ -10,13 +10,18 @@ namespace K8sPSDrive
     public class Root: SHiPSDirectory
     {
         public static Kubernetes _client;
+
+        public string ClusterName { get; }
+
         public Root(string name): base(name)
         {
             try
             {
                 var config = KubernetesClientConfiguration.BuildConfigFromConfigFile();
-
+                
                 _client = new Kubernetes(config);
+
+                this.ClusterName = config.Host;
             }
             catch (Exception ex)
             {
@@ -29,8 +34,8 @@ namespace K8sPSDrive
         {
             return new List<object>
             {
-                new NameSpaces("namespaces"),
-                new Nodes("nodes")
+                new NameSpaces.NameSpaces("namespaces"),
+                new Nodes.Nodes("nodes")
             }.ToArray();
         }
         

@@ -4,7 +4,7 @@ using Microsoft.PowerShell.SHiPS;
 using k8s;
 using k8s.Models;
 
-namespace K8sPSDrive
+namespace K8sPSDrive.Nodes
 {
     [SHiPSProvider(UseCache=true)]
     public class Nodes: SHiPSDirectory
@@ -20,7 +20,7 @@ namespace K8sPSDrive
             foreach (var node in nodes.Items)
             {
                 childItems.Add(
-                    new Node(node.Metadata.Name, node)
+                    new NodeLeaf(node.Metadata.Name, node)
                 );
             }
             return childItems.ToArray();

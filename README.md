@@ -30,3 +30,8 @@ To just run the build, execute Invoke-Build
 Install dev version of the module on the local system after building it.
 
     Invoke-Build Install
+
+#
+
+Import-Module -Name  \Src\bin\Debug\netstandard2.1\K8sPSDrive.psd1 -Verbose
+New-PSDrive -Name DhcpServers -PSProvider SHiPS -Root K8sPSDrive#K8sPSDrive.Root
