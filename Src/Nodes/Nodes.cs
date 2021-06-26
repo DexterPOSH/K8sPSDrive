@@ -15,7 +15,7 @@ namespace K8sPSDrive.Nodes
 
         public override object[] GetChildItem()
         {
-            var nodes = Root._client.ListNode() ;
+            var nodes = Root._client.ListNode();
             var childItems = new List<object>();
             foreach (var node in nodes.Items)
             {

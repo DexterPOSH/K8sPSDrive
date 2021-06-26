@@ -6,7 +6,6 @@ using k8s.Models;
 
 namespace K8sPSDrive.Nodes
 {
-
     [SHiPSProvider(UseCache=true)]
     public class NodeLeaf: SHiPSLeaf
     {

@@ -6,7 +6,6 @@ using k8s.Models;
 
 namespace K8sPSDrive.NameSpaces
 {
-
     [SHiPSProvider(UseCache=false)]
     public class NameSpaceDirectory : SHiPSDirectory
     {
@@ -30,7 +29,6 @@ namespace K8sPSDrive.NameSpaces
         {
            _ = ns ?? throw new ArgumentNullException(nameof(ns));
            this.K8sObject = Root._client.ReadNamespace(ns.Metadata.Name);
-
         }
 
         public override object[] GetChildItem()
@@ -40,7 +38,6 @@ namespace K8sPSDrive.NameSpaces
                 new DeploymentDirectory("deployments", this.Name),
                 new PodDirectory("pods", this.Name)
             }.ToArray();
-            
         }
     }
 }

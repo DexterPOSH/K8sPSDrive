@@ -30,7 +30,6 @@ namespace K8sPSDrive.NameSpaces
         }
         public int? Updated 
         {
-
             get
             {
                 return this.K8sObject.Status.UpdatedReplicas;
@@ -50,10 +49,8 @@ namespace K8sPSDrive.NameSpaces
             _ = deployment ?? throw new ArgumentNullException(nameof(deployment));
             this.NameSpace = ns;
             this.K8sObject = Root._client.ReadNamespacedDeployment(deployment.Metadata.Name, deployment.Metadata.NamespaceProperty);
-
         }
 
-        
         public string GetContent()
         {
             var boundParams = this.ProviderContext.BoundParameters;

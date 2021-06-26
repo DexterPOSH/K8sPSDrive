@@ -11,7 +11,7 @@ namespace K8sPSDrive.NameSpaces
     public class PodLeaf: SHiPSLeaf
     {
         public string NameSpace { get; }
-        public V1Pod K8sObject { get;}
+        public V1Pod K8sObject { get; }
         public string Phase
         { 
             get 

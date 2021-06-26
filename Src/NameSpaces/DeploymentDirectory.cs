@@ -4,7 +4,6 @@ using Microsoft.PowerShell.SHiPS;
 using k8s;
 using k8s.Models;
 
-
 namespace K8sPSDrive.NameSpaces
 {
     [SHiPSProvider(UseCache=false)]
@@ -14,7 +13,7 @@ namespace K8sPSDrive.NameSpaces
         {
             this.NameSpace = ns;
         }
-
+        
         public string NameSpace { get; }
 
         public override object[] GetChildItem()
