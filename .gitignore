@@ -1,2 +1,4 @@
 Src/bin/*
 Src/obj/*
+.vs/*
+ci/*
