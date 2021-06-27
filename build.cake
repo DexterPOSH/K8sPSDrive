@@ -24,8 +24,8 @@ System.Console.WriteLine($"Version: {civersion}");
 ///////////////////////////////////////////////////////////////////////////////
 
 var projects = GetFiles("./**/*.csproj");
-var sourceProjectPath = GetFiles("./src/*.csproj").FirstOrDefault();
-var pesterTestFiles = GetFiles("./tests/*.Tests.ps1");
+var sourceProjectPath = GetFiles("./Src/*.csproj").FirstOrDefault();
+var pesterTestFiles = GetFiles("./Tests/*.Tests.ps1");
 
 var projectPaths = projects.Select(project => project.GetDirectory().ToString());
 var artifactsDir = "./ci/artifacts";
@@ -139,7 +139,7 @@ Task("Build")
             .SetVersion(civersion)
             .SetFileVersion(civersion)
     };
-
+    Information($"{sourceProjectPath.FullPath}");
     DotNetCoreBuild(sourceProjectPath.FullPath, settings);
 });
 
