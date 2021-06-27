@@ -31,12 +31,7 @@ var projectPaths = projects.Select(project => project.GetDirectory().ToString())
 var artifactsDir = "./ci/artifacts";
 var publishDir = "./ci/publish/dotnet";
 var coverageDir = MakeAbsolute(Directory("./ci/coverage"));
-var cuberturaFileName = "coverage";
-var cuberturaFileExtension = ".cobertura.xml";
-var reportTypes = "HtmlInline_AzurePipelines"; //"HtmlInline_AzurePipelines"; // Use "Html" value locally for performance and files' size.
-var coverageFilePath = coverageDir.CombineWithFilePath(File(cuberturaFileName + cuberturaFileExtension));
-var jsonFilePath = coverageDir.CombineWithFilePath(File(cuberturaFileName + ".json"));
-var coverageThreshold = 20;
+
 
 string runtime;
 if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
@@ -170,6 +165,7 @@ Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
 {
+    Information($"");
    foreach (var pesterTestFile in pesterTestFiles)
    {
       StartPowershellFile(pesterTestFile.FullPath, args => 
