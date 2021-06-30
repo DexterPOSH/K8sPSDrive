@@ -16,6 +16,7 @@ BeforeDiscovery {
     else {
         $SkipKubeTests = $false
     }
+    'ModulePath -> {0}' -f $ModulePath
 }
 
 BeforeAll {
@@ -23,9 +24,7 @@ BeforeAll {
     $fileName = Split-Path $PSCommandPath -Leaf
     $moduleName = $fileName.Replace('.Tests.ps1', ".psd1")
     $moduleFile = Join-Path -Path $ModulePath -ChildPath $moduleName
-    Import-Module $moduleFile -ErrorAction Stop
-
-    
+    Import-Module $moduleFile -ErrorAction Stop -Verbose
 }
 
 Describe "K8sPSDrive Integration tests" {

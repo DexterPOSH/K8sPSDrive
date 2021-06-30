@@ -163,7 +163,7 @@ Task("Publish")
 
 Task("Test")
     .Description("Run Pester Tests.")
-    //.IsDependentOn("Build")
+    .IsDependentOn("Build")
     .Does(() =>
 {
     // Bootstrap required modules for PowerShell
