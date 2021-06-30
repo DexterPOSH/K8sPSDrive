@@ -1,13 +1,34 @@
-$ErrorActionPreference = 'Stop'
+[CmdletBinding()]
+param(
+    [Switch]$BootStrapOnly
+)
+begin {
+    $ErrorActionPreference = 'Stop'
 
-Set-Location -LiteralPath $PSScriptRoot
+    Set-Location -LiteralPath $PSScriptRoot
+    
+    $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = '1'
+    $env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
+    $env:DOTNET_NOLOGO = '1'
+}
+end {
+    if ($BootStrapOnly.IsPresent) {
+        'BootStrapOnly Mode...'
+        dotnet tool restore
+        if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE 
+        }
 
-$env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = '1'
-$env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
-$env:DOTNET_NOLOGO = '1'
+        foreach ($module in $requiredModules) {
+            $modAvailable = Get-Module -Name $module -ListAvailable
 
-dotnet tool restore
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-
-dotnet cake @args
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            if (-not $modAvailable) {
+                Install-Module -Name $module -Repository PSGallery -Scope CurrentUser -Force -Verbose
+            }
+        }
+    }
+    else {
+        dotnet cake @args
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    }
+}

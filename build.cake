@@ -167,7 +167,7 @@ Task("Test")
     .Does(() =>
 {
     // Bootstrap required modules for PowerShell
-    using(var process = StartAndReturnProcess(pwshExeName, new ProcessSettings{ Arguments = "-File ./ci/bootstrapPwsh.ps1"}))
+    using(var process = StartAndReturnProcess(pwshExeName, new ProcessSettings{ Arguments = "-File ./build.ps1 -BootStrapOnly"}))
     {
         process.WaitForExit();
         // This should output 0 as valid arguments supplied
