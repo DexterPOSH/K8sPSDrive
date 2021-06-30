@@ -1,3 +1,5 @@
+
+#Requires -Module Pester, SHiPS
 [CmdletBinding()]
 param (
     [Parameter()]

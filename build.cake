@@ -1,11 +1,8 @@
-#addin nuget:?package=Cake.Coverlet&version=2.5.4
-using System.Collections;
-#tool nuget:?package=ReportGenerator&version=4.8.11
-#addin nuget:?package=Cake.Kubectl&version=1.0.0
-// Currently there is an issue with below Cake.PowerShell
+// Currently there is an issue with below Cake.PowerShell, it downloads huge sum of dependencies
 // so have to specify loaddependencies true -> https://github.com/SharpeRAD/Cake.Powershell/issues/84 
-#addin nuget:?package=Cake.Powershell&version=1.0.1&loaddependencies=true
+// #addin nuget:?package=Cake.Powershell&version=1.0.1&loaddependencies=true
 
+using System.Collections;
 using System.Runtime.InteropServices;
 
 
@@ -34,17 +31,21 @@ var coverageDir = MakeAbsolute(Directory("./ci/coverage"));
 
 
 string runtime;
+string pwshExeName;
 if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
 {
     runtime = "linux-x64";
+    pwshExeName = "pwsh";
 }
 if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 {
     runtime = "win-x64";
+    pwshExeName = "pwsh.exe";
 }
 if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 {
     runtime = "osx-x64";
+    pwshExeName = "pwsh";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -162,16 +163,31 @@ Task("Publish")
 
 Task("Test")
     .Description("Run Pester Tests.")
-    .IsDependentOn("Build")
+    //.IsDependentOn("Build")
     .Does(() =>
 {
-    Information($"");
+    // Bootstrap required modules for PowerShell
+    using(var process = StartAndReturnProcess(pwshExeName, new ProcessSettings{ Arguments = "-File ./ci/bootstrapPwsh.ps1"}))
+    {
+        process.WaitForExit();
+        // This should output 0 as valid arguments supplied
+        //var output = String.Join(' ', process.GetStandardOutput());
+        //Information(output);
+        Information("Exit code: {0}", process.GetExitCode());
+    }
+
    foreach (var pesterTestFile in pesterTestFiles)
    {
-      StartPowershellFile(pesterTestFile.FullPath, args => 
-      {
-         args.Append("ModulePath",MakeAbsolute(Directory(artifactsDir)).FullPath);
-      });
+        // run tests
+        using(var process = StartAndReturnProcess(pwshExeName, new ProcessSettings{ Arguments = $"-File {pesterTestFile.FullPath} -ModulePath {artifactsDir}"}))
+        {
+            process.WaitForExit();
+            // This should output 0 as valid arguments supplied
+            //var output = String.Join(' ', process.GetStandardOutput());
+            //Information(output);
+            Information("Exit code: {0}", process.GetExitCode());
+        }
+        
    }
 });
 
