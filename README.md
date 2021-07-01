@@ -5,7 +5,13 @@ This repository plays around the idea of exposing Kubernetes cluster as a PowerS
 This is binary PowerShell module, which means it is written in C#.
 This is purely experimental and a pet project of mine to learn C# and Kubernetes together.
 
-Tested on PowerShell 7 and built on .NET Core 3.1
+Tested on PowerShell Core and built on .NET Core 3.1
+
+## Pre-requisites
+
+- [Install latest .NET Core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1)
+- [Install PowerShell Core](https://github.com/powershell/powershell)
+- Valid kubeconfig set in default path `~/.kube/config` with access to a K8s cluster setup.
 
 ## Clone
 
@@ -39,7 +45,7 @@ Once the module is built the artifacts are placed under `ci/artifacts` folder.
 In the PowerShell console open the repository root and run below commands.
 
 
-Note - Mapping a K8sPSDrive uses the default KubeConfig at ~/.kube/config , so if that is not set it will throw an error
+Note - Mapping a K8sPSDrive uses the default KubeConfig at `~/.kube/config` , so if that is not set it will throw an error
 
 ```powershell
 Import-Module -Name  ./ci/artifacts/K8sPSDrive.psd1 -Verbose
