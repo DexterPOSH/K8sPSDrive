@@ -4,7 +4,7 @@ using Microsoft.PowerShell.SHiPS;
 using k8s;
 using k8s.Models;
 
-namespace K8sPSDrive
+namespace K8sPSDrive.NameSpaces
 {
     [SHiPSProvider(UseCache=true)]
     public class NameSpaces: SHiPSDirectory
@@ -16,11 +16,11 @@ namespace K8sPSDrive
         public override object[] GetChildItem()
         {
             var namespaces = Root._client.ListNamespace();
-            var childItems = new List<object>();
+            var childItems = new List<NameSpaceDirectory>();
             foreach (var ns in namespaces.Items)
             {
                 childItems.Add(
-                    new NameSpace(ns.Metadata.Name, ns)
+                    new NameSpaceDirectory(ns.Metadata.Name, ns)
                 );
             }
             return childItems.ToArray();

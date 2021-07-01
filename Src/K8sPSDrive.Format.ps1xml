@@ -54,11 +54,11 @@
     <View>
       <Name>NameSpacesTable</Name>
       <ViewSelectedBy>
-       <TypeName>K8sPSDrive.NameSpace</TypeName>
+       <TypeName>K8sPSDrive.NameSpaces.NameSpaceDirectory</TypeName>
       </ViewSelectedBy>
       <GroupBy>
           <PropertyName>PSParentPath</PropertyName>
-          <CustomControlName>AzurePSDriveFormatControl</CustomControlName>
+          <CustomControlName>K8sPSDriveFormatControl</CustomControlName>
       </GroupBy>
       <TableControl>
        <TableHeaders>
@@ -79,14 +79,14 @@
        </TableRowEntries>
       </TableControl>
     </View>
-        <View>
-      <Name>NameSpacePodTable</Name>
+    <View>
+      <Name>PodLeafTable</Name>
       <ViewSelectedBy>
-       <TypeName>K8sPSDrive.NameSpacePod</TypeName>
+       <TypeName>K8sPSDrive.NameSpaces.PodLeaf</TypeName>
       </ViewSelectedBy>
       <GroupBy>
           <PropertyName>PSParentPath</PropertyName>
-          <CustomControlName>AzurePSDriveFormatControl</CustomControlName>
+          <CustomControlName>K8sPSDriveFormatControl</CustomControlName>
       </GroupBy>
       <TableControl>
        <TableHeaders>
@@ -109,6 +109,68 @@
          </TableColumnItems>
         </TableRowEntry>
        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>DeploymentLeafTable</Name>
+      <ViewSelectedBy>
+        <TypeName>K8sPSDrive.NameSpaces.DeploymentLeaf</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <PropertyName>PSParentPath</PropertyName>
+        <CustomControlName>K8sPSDriveFormatControl</CustomControlName>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Mode</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>NameSpace</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>NAME</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Ready</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Available</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Updated</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>AgeInDays</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>SSItemMode</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>NameSpace</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$total = $_.K8sObject.Spec.Replicas ; $ready = $_.K8sObject.Status.ReadyReplicas; '{0}/{1}' -f $ready, $total</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Available</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Updated</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.Age.Days</ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
       </TableControl>
     </View>
  </ViewDefinitions>
