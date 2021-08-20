@@ -131,3 +131,7 @@ Mode NAME                                   Ready Status  Restarts AgeInDays
 .    storage-provisioner                    1/1   Running 0        16
 .    vpnkit-controller                      1/1   Running 0        16
 ```
+
+# Visualization
+
+![Visualization of the codebase](./diagram.svg)
