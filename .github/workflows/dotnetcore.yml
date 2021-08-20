@@ -39,3 +39,4 @@ jobs:
       uses: githubocto/repo-visualizer@main
       with:
         root_path: "Src/"
+        excluded_paths: "Src/bin,Src/lib,Src/obj"
